@@ -1,0 +1,22 @@
+# Cloudflare Pages deployment configuration for CodeWix
+# Docs: https://developers.cloudflare.com/pages/platform/build-configuration/
+
+name = "codewix"
+compatibility_date = "2026-08-20"
+
+# Cloudflare Pages project settings
+# Build command: pnpm build:cf
+# Build output directory: .open-next/worker
+# Node.js version: 20
+
+[vars]
+NEXT_PUBLIC_DOMAIN = "https://codewix.com"
+
+# Secret environment variables (set via Cloudflare Dashboard or wrangler secret put)
+# ZAI_API_KEY = ""
+# DATABASE_URL = ""
+# S3_UPLOAD_KEY = ""
+# S3_UPLOAD_SECRET = ""
+# S3_UPLOAD_BUCKET = ""
+# S3_UPLOAD_REGION = ""
+# BRAINTRUST_API_KEY = ""

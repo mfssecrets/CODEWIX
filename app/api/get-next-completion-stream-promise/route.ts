@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaNeon } from "@prisma/adapter-neon";
 import { Pool } from "@neondatabase/serverless";
 import { z } from "zod";
-import Together from "together-ai";
+import ZAI from "@/lib/zai";
 import { resolveModel } from "@/lib/constants";
 import {
   flushBraintrustSpan,
@@ -155,7 +155,7 @@ export async function POST(req: Request) {
     messages = [messages[0], messages[1], messages[2], ...messages.slice(-7)];
   }
 
-  const together = new Together();
+  const zai = new ZAI();
   const resolvedModel = resolveModel(model);
   const temperature = 0.4;
   // 20000, up from the benchmarked 13000: chat USzt_maT7friospM hit the 13k
@@ -190,7 +190,7 @@ export async function POST(req: Request) {
         requestedModel: model,
         resolvedModel,
         model: resolvedModel,
-        provider: "together",
+        provider: "zai",
         messageCount: inputMessages.length,
         promptChars,
         temperature,
@@ -199,11 +199,10 @@ export async function POST(req: Request) {
     },
   });
 
-  let stream: ReturnType<typeof together.chat.completions.stream>;
+  let stream: ReturnType<typeof zai.chat.completions.stream>;
   try {
-    stream = together.chat.completions.stream({
+    stream = zai.chat.completions.stream({
       model: resolvedModel,
-      reasoning: { enabled: false },
       messages: inputMessages,
       temperature,
       max_tokens: maxTokens,

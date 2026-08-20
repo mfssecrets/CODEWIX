@@ -1,5 +1,5 @@
 import fs from "node:fs/promises";
-import Together from "together-ai";
+// Uses Z.AI API for benchmarking (no SDK needed, direct fetch)
 
 export type JudgeResult = {
   model: string;
@@ -132,38 +132,50 @@ function parseJsonObject(content: string): any {
 }
 
 function createTogetherJudgeRequest(): JudgeRequest {
-  const together = new Together();
+  const apiKey = process.env.ZAI_API_KEY;
+  const apiBase = process.env.ZAI_API_BASE ?? "https://api.z-ai.cn/v1";
 
   return {
     create: async (options) => {
-      const response = await together.chat.completions.create({
-        model: options.model,
-        reasoning: { enabled: false },
-        temperature: 0,
-        max_tokens: 1200,
-        messages: [
-          {
-            role: "user",
-            content: [
-              {
-                type: "text",
-                text: buildJudgePrompt(
-                  options.prompt,
-                  options.expectedBehavior,
-                ),
-              },
-              {
-                type: "image_url",
-                image_url: {
-                  url: `data:image/png;base64,${options.screenshotBase64}`,
+      const response = await fetch(`${apiBase}/chat/completions`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: options.model,
+          temperature: 0,
+          max_tokens: 1200,
+          messages: [
+            {
+              role: "user",
+              content: [
+                {
+                  type: "text",
+                  text: buildJudgePrompt(
+                    options.prompt,
+                    options.expectedBehavior,
+                  ),
                 },
-              },
-            ],
-          },
-        ],
+                {
+                  type: "image_url",
+                  image_url: {
+                    url: `data:image/png;base64,${options.screenshotBase64}`,
+                  },
+                },
+              ],
+            },
+          ],
+        }),
       });
 
-      return response.choices[0].message?.content ?? "";
+      if (!response.ok) {
+        throw new Error(`Judge API error ${response.status}: ${await response.text()}`);
+      }
+
+      const json = await response.json();
+      return json.choices?.[0]?.message?.content ?? "";
     },
   };
 }

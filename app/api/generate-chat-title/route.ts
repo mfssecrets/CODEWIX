@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import Together from "together-ai";
+import ZAI from "@/lib/zai";
 import { getPrisma } from "@/lib/prisma";
 import {
   cleanGeneratedChatTitle,
@@ -99,12 +99,11 @@ export async function POST(request: NextRequest) {
       }
 
       const startedAt = performance.now();
-      const together = new Together();
-      const response = await together.chat.completions.create({
+      const zai = new ZAI();
+      const response = await zai.chat.completions.create({
         model: TITLE_MODEL,
         temperature: 0.2,
         max_tokens: 24,
-        chat_template_kwargs: { enable_thinking: false },
         messages: [
           {
             role: "system",
@@ -133,7 +132,7 @@ export async function POST(request: NextRequest) {
         output: generatedTitle,
         metadata: {
           model: TITLE_MODEL,
-          provider: "together",
+          provider: "zai",
         },
         metrics: {
           duration_ms: performance.now() - startedAt,
@@ -160,7 +159,7 @@ export async function POST(request: NextRequest) {
           route: "/api/generate-chat-title",
           chatId: chat.id,
           model: TITLE_MODEL,
-          provider: "together",
+          provider: "zai",
         },
       },
     });

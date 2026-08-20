@@ -1,5 +1,7 @@
-// Legacy model IDs → current serverless replacements. resolveModel() maps these
-// so existing chats/DB rows that reference an old ID keep working.
+// Z.AI API model configuration.
+// All models are served via the Z.AI OpenAI-compatible endpoint.
+// resolveModel() maps legacy IDs so existing chats/DB rows keep working.
+
 export const MODEL_ALIASES: Record<string, string> = {
   "zai-org/GLM-4.6": "zai-org/GLM-5.2",
   "zai-org/GLM-5": "zai-org/GLM-5.2",
@@ -13,6 +15,7 @@ export const MODEL_ALIASES: Record<string, string> = {
   "Qwen/Qwen3-Coder-Next-FP8": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
   "Qwen/Qwen3-Coder-480B-A35B-Instruct-FP8": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
   "Qwen/Qwen3-235B-A22B-Instruct-2507-tput": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+  "meta-llama/Llama-3.3-70B-Instruct-Turbo": "zai-org/GLM-5.2",
 };
 
 export function resolveModel(model: string): string {
@@ -20,8 +23,7 @@ export function resolveModel(model: string): string {
 }
 
 // Model used for the high-quality "software architect" plan step in
-// create-chat. Must support non-streaming completions (create-chat calls it
-// with stream=false). Qwen3-Coder-* are now non-serverless on Together.
+// create-chat. Must support non-streaming completions.
 export const PLANNING_MODEL = "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8";
 
 export type ModelOption = {
@@ -32,11 +34,8 @@ export type ModelOption = {
   note?: string;
 };
 
-// Selectable (non-hidden) models are the fast, reliable set plus Nemotron 3
-// Ultra (fast on serverless). Qwen3.7 Max, MiniMax M3 and the old Qwen 3 235B
-// were dropped from the picker for slow/inconsistent serverless throughput,
-// but stay here as hidden entries so existing chats and MODEL_ALIASES keep
-// resolving them.
+// Selectable models available through the Z.AI API.
+// Hidden models remain for backward compatibility with existing chats.
 export const MODELS: ModelOption[] = [
   {
     label: "GLM 5.2",
@@ -54,6 +53,7 @@ export const MODELS: ModelOption[] = [
     label: "Nemotron 3 Ultra",
     value: "nvidia/nemotron-3-ultra-550b-a55b",
   },
+  // Hidden: legacy / alias-only models kept for DB backward-compat
   {
     label: "Qwen3.7 Max",
     value: "Qwen/Qwen3.7-Max",
@@ -75,7 +75,7 @@ export const MODELS: ModelOption[] = [
     hidden: true,
   },
   {
-    label: "Qwen 3 235B",
+    label: "Qwen 3 235B (tput)",
     value: "Qwen/Qwen3-235B-A22B-Instruct-2507-tput",
     hidden: true,
   },

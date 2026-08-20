@@ -22,16 +22,14 @@ function Header() {
           <path d="M0.25 0V19.5" stroke="#C2C2C2" strokeWidth="0.5" />
         </svg>
 
-        <img
-          src="/together.svg"
-          alt=""
-          className="mx-auto h-[30px] object-contain"
-        />
+        <span className="mx-auto text-lg font-semibold text-gray-700">
+          CodeWix
+        </span>
       </Link>
 
       <div className="absolute right-3">
         <a
-          href="https://github.com/nutlope/llamacoder"
+          href="https://github.com/mfssecrets/CODEWIX"
           target="_blank"
           className="ml-auto hidden items-center gap-3 rounded-xl border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-700 sm:flex"
         >

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getPrisma } from "@/lib/prisma";
 import { screenshotToCodePrompt } from "@/lib/prompts";
 import { buildProductionCodingPrompt } from "@/lib/prompt-config";
-import Together from "together-ai";
+import ZAI from "@/lib/zai";
 import { resolveModel } from "@/lib/constants";
 import { createLocalChatTitle } from "@/lib/chat-title";
 import {
@@ -30,10 +30,9 @@ export async function POST(request: NextRequest) {
           const describeScreenshot = async (span?: Span) => {
             const startedAt = performance.now();
             const screenshotModel = "moonshotai/Kimi-K2.7-Code";
-            const together = new Together();
-            const screenshotResponse = await together.chat.completions.create({
+            const zai = new ZAI();
+            const screenshotResponse = await zai.chat.completions.create({
               model: screenshotModel,
-              reasoning: { enabled: false },
               temperature: 0.4,
               max_tokens: 1000,
               messages: [
@@ -58,7 +57,7 @@ export async function POST(request: NextRequest) {
               output: description,
               metadata: {
                 model: screenshotModel,
-                provider: "together",
+                provider: "zai",
               },
               metrics: {
                 duration_ms: performance.now() - startedAt,
@@ -82,7 +81,7 @@ export async function POST(request: NextRequest) {
                   metadata: {
                     chatId,
                     route: "/api/create-chat",
-                    provider: "together",
+                    provider: "zai",
                   },
                 },
               })

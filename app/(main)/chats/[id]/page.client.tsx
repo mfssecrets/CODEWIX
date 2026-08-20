@@ -26,7 +26,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { ChatCompletionStream } from "together-ai/lib/ChatCompletionStream.mjs";
+import { parseSSEStream } from "@/lib/sse-stream";
 import ChatBox from "./chat-box";
 import ChatLog from "./chat-log";
 import CodeViewer from "./code-viewer";
@@ -115,7 +115,7 @@ export default function PageClient({ chat }: { chat: Chat }) {
       let didPushToCode = false;
       let didPushToPreview = false;
 
-      ChatCompletionStream.fromReadableStream(stream)
+      parseSSEStream(stream)
         .on("content", (delta, content) => {
           setStreamText(() => sanitizeAssistantOutput(content));
 

@@ -1,9 +1,7 @@
-// Local smoke-test: are the models on the homepage still served by Together's
-// SERVERLESS inference API? Pings each model with a tiny completion request and
-// cross-checks the /v1/models catalog, so we can tell apart:
-//   - WORKS          → 200, serverless call succeeds
-//   - NON_SERVERLESS → model exists but requires a dedicated endpoint
-//                      ("Unable to access non-serverless model …")
+// Local smoke-test: are the models on the homepage still served by Z.AI's
+// API? Pings each model with a tiny completion request and
+// cross-checks the /v1/models catalog.
+//   - WORKS          → 200, call succeeds
 //   - DEPRECATED     → removed from the catalog / explicit deprecation / 404
 //   - (transient)    → AUTH_ERROR / RATE_LIMITED / SERVER_ERROR / TIMEOUT / NETWORK
 //
@@ -13,17 +11,17 @@
 
 import { MODELS, resolveModel } from "../lib/constants.ts";
 
-const API_BASE = "https://api.together.xyz/v1";
+const API_BASE = process.env.ZAI_API_BASE ?? "https://api.z-ai.cn/v1";
 const COMPLETIONS_URL = `${API_BASE}/chat/completions`;
 const MODELS_URL = `${API_BASE}/models`;
 const PER_REQUEST_TIMEOUT_MS = 45_000;
 const CONCURRENCY = 5;
 const RETRIES = 1; // retry transient failures once
 
-const API_KEY = process.env.TOGETHER_API_KEY;
+const API_KEY = process.env.ZAI_API_KEY;
 if (!API_KEY) {
   console.error(
-    "✗ TOGETHER_API_KEY not found. Run with: node --env-file=.env scripts/check-models.ts",
+    "✗ ZAI_API_KEY not found. Run with: node --env-file=.env scripts/check-models.ts",
   );
   process.exit(2);
 }
@@ -100,7 +98,7 @@ async function fetchCatalog(): Promise<Set<string> | null> {
       return null;
     }
     const json = (await res.json()) as any[];
-    // Together returns either [{id}] or [{model:{id}}]; handle both.
+    // Z.AI returns either [{id}] or [{model:{id}}]; handle both.
     const ids = new Set<string>();
     for (const m of json) {
       const id = m?.id ?? m?.model?.id;

@@ -7,14 +7,14 @@
 
 export {};
 
-const COMPLETIONS_URL = "https://api.together.xyz/v1/chat/completions";
+const COMPLETIONS_URL = `${process.env.ZAI_API_BASE ?? "https://api.z-ai.cn/v1"}/chat/completions`;
 const PER_REQUEST_TIMEOUT_MS = 45_000;
 const CONCURRENCY = 4;
 
-const API_KEY = process.env.TOGETHER_API_KEY;
+const API_KEY = process.env.ZAI_API_KEY;
 if (!API_KEY) {
   console.error(
-    "✗ TOGETHER_API_KEY not found. Run with: node --env-file=.env scripts/check-candidates.ts",
+    "✗ ZAI_API_KEY not found. Run with: node --env-file=.env scripts/check-candidates.ts",
   );
   process.exit(2);
 }

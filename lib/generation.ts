@@ -1,4 +1,4 @@
-import Together from "together-ai";
+import ZAI from "@/lib/zai";
 import { PLANNING_MODEL, resolveModel } from "./constants";
 import {
   getMainCodingPrompt,
@@ -108,7 +108,7 @@ export async function generateApp(
     throw new Error(`Unsupported archMode: ${archMode}`);
   }
 
-  const together = new Together();
+  const zai = new ZAI();
   const startedAt = performance.now();
 
   // archMode "none" mirrors the production default (quality "low"): the raw
@@ -120,7 +120,7 @@ export async function generateApp(
   // user prompt is the user message) but adds a short instruction to plan
   // internally while keeping the response code-only.
   if (archMode === "separate") {
-    const planResponse = await together.chat.completions.create({
+    const planResponse = await zai.chat.completions.create({
       model: PLANNING_MODEL,
       messages: [
         {
@@ -219,9 +219,8 @@ export async function generateApp(
     systemPrompt += "\n\n" + INLINE_PLAN_INSTRUCTION;
   }
 
-  const stream = together.chat.completions.stream({
+  const stream = zai.chat.completions.stream({
     model: resolveModel(model),
-    reasoning: { enabled: false },
     messages: [
       { role: "system", content: systemPrompt },
       { role: "user", content: plan },

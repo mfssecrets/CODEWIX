@@ -8,14 +8,14 @@
 //   node --env-file=.env scripts/benchmark/title-models.ts --limit 40 --reps 2
 //   node --env-file=.env scripts/benchmark/title-models.ts --all --reps 3
 
-const API_BASE = "https://api.together.xyz/v1";
+const API_BASE = process.env.ZAI_API_BASE ?? "https://api.z-ai.cn/v1";
 const MODELS_URL = `${API_BASE}/models`;
 const COMPLETIONS_URL = `${API_BASE}/chat/completions`;
 
-const API_KEY = process.env.TOGETHER_API_KEY;
+const API_KEY = process.env.ZAI_API_KEY;
 if (!API_KEY) {
   console.error(
-    "Missing TOGETHER_API_KEY. Run with: node --env-file=.env scripts/benchmark/title-models.ts",
+    "Missing ZAI_API_KEY. Run with: node --env-file=.env scripts/benchmark/title-models.ts",
   );
   process.exit(2);
 }
