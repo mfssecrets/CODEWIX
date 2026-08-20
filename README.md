@@ -1,3 +1,7 @@
+# CODEWIX
+
+Vibecoding website and app creation powered by LlamaCoder.
+
 <a href="https://www.llamacoder.io">
   <img alt="Llama Coder" src="./public/og-image.png">
   <h1 align="center">Llama Coder</h1>
