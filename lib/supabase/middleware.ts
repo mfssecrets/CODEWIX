@@ -68,23 +68,23 @@ export async function updateSession(request: NextRequest) {
   }
 
   // UUID route protection — redirect unauthenticated users to sign in
-  // A UUID route is any single-segment path that is not a known public route
+  // A UUID route is any path starting with a UUID segment that is not a known public route
   const publicRootRoutes = ["/", "/eval-harness"];
   const segments = pathname.split("/").filter(Boolean);
 
-  if (
-    segments.length === 1 &&
-    !publicRootRoutes.includes(pathname) &&
-    !pathname.startsWith("/chats") &&
-    !user
-  ) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/signin";
-    return NextResponse.redirect(url);
-  }
+  // Protected routes: /<uuid>, /<uuid>/my-apps, /<uuid>/build/<projectId>, /chats/<id>
+  const isProtectedPath =
+    (segments.length >= 1 &&
+      !publicRootRoutes.includes(pathname) &&
+      !pathname.startsWith("/chats") &&
+      !pathname.startsWith("/signin") &&
+      !pathname.startsWith("/signup") &&
+      !pathname.startsWith("/otpverification") &&
+      !pathname.startsWith("/forgotpassword") &&
+      !pathname.startsWith("/newpassword")) ||
+    pathname.startsWith("/chats");
 
-  // Chat routes — redirect unauthenticated users to sign in
-  if (pathname.startsWith("/chats") && !user) {
+  if (isProtectedPath && !user) {
     const url = request.nextUrl.clone();
     url.pathname = "/signin";
     return NextResponse.redirect(url);

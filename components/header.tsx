@@ -18,12 +18,12 @@ import {
 } from "lucide-react";
 
 const DROPDOWN_ITEMS = [
-  { label: "My Account", icon: User, href: "" },
-  { label: "My Plan", icon: CreditCard, href: "" },
-  { label: "Notifications", icon: Bell, href: "" },
-  { label: "My Apps", icon: LayoutGrid, href: "" },
-  { label: "Help", icon: HelpCircle, href: "" },
-  { label: "Terms & Policies", icon: FileText, href: "" },
+  { label: "My Account", icon: User, action: "account" },
+  { label: "My Plan", icon: CreditCard, action: "plan" },
+  { label: "Notifications", icon: Bell, action: "notifications" },
+  { label: "My Apps", icon: LayoutGrid, action: "my-apps" },
+  { label: "Help", icon: HelpCircle, action: "help" },
+  { label: "Terms & Policies", icon: FileText, action: "terms" },
 ];
 
 function Header() {
@@ -116,7 +116,9 @@ function Header() {
                       key={item.label}
                       onClick={() => {
                         setDropdownOpen(false);
-                        // Navigation can be implemented per-item as needed
+                        if (item.action === "my-apps" && user) {
+                          router.push(`/${user.id}/my-apps`);
+                        }
                       }}
                       className="flex w-full items-center gap-3 px-4 py-2.5 text-left text-sm text-indigo-100 transition-colors hover:bg-white/10"
                     >

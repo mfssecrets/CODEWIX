@@ -12,6 +12,27 @@ import {
   serializeBraintrustError,
 } from "@/lib/braintrust";
 import type { Span } from "braintrust";
+import { createClient } from "@/lib/supabase/server";
+
+function detectProjectType(prompt: string): "Website" | "Web App" {
+  const lower = prompt.toLowerCase();
+  const appKeywords = [
+    "app",
+    "application",
+    "dashboard",
+    "admin",
+    "management",
+    "crm",
+    "erp",
+    "portal",
+    "platform",
+    "system",
+    "tracker",
+    "manager",
+  ];
+  if (appKeywords.some((kw) => lower.includes(kw))) return "Web App";
+  return "Website";
+}
 
 export async function POST(request: NextRequest) {
   const logger = getBraintrustLogger();
@@ -153,6 +174,27 @@ export async function POST(request: NextRequest) {
           completed: true,
         },
       });
+
+      // Auto-save project for authenticated users
+      try {
+        const supabase = await createClient();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (user) {
+          const projectTitle = createLocalChatTitle(prompt);
+          const projectType = detectProjectType(prompt);
+          await supabase.from("projects").insert({
+            user_id: user.id,
+            chat_id: chatId,
+            name: projectTitle,
+            type: projectType,
+          });
+        }
+      } catch (err) {
+        // Don't fail the chat creation if project save fails
+        console.warn("Failed to auto-save project:", err);
+      }
 
       return NextResponse.json({
         chatId,
