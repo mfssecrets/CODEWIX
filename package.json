@@ -6,7 +6,8 @@
   "scripts": {
     "postinstall": "prisma generate",
     "dev": "next dev",
-    "build": "pnpm generate:baseui-vendor && prisma generate && prisma migrate deploy && next build",
+    "build": "pnpm generate:baseui-vendor && prisma generate && next build",
+    "migrate:deploy": "prisma migrate deploy",
     "build:cf": "pnpm generate:baseui-vendor && prisma generate && npx @opennextjs/cloudflare build",
     "preview:cf": "npx wrangler pages dev .open-next/worker",
     "deploy:cf": "npx wrangler pages deploy .open-next/worker",
