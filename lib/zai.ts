@@ -1,8 +1,7 @@
 /**
- * Z.AI API client — drop-in replacement for the Together AI SDK.
+ * Z.AI API client.
  *
- * Uses the Z.AI OpenAI-compatible chat completions endpoint so all
- * existing call sites only need to swap the import.
+ * Uses the Z.AI OpenAI-compatible chat completions endpoint.
  *
  * Environment variable: ZAI_API_KEY
  */
@@ -64,7 +63,7 @@ function headers(): Record<string, string> {
 }
 
 // ------------------------------------------------------------------
-// ZAI class — mirrors the Together SDK surface used in this codebase
+// ZAI class — chat completions (create + stream)
 // ------------------------------------------------------------------
 
 export class ZAI {
@@ -84,9 +83,8 @@ export class ZAI {
           stream: false,
         };
 
-        // Strip Together-specific extras that Z.AI doesn't support
-        // (reasoning, chat_template_kwargs are Together-specific).
-        // If you need reasoning support on Z.AI, add the appropriate
+        // Strip unused parameters that the caller may pass.
+        // If you need additional parameter support, add the appropriate
         // parameter mapping here.
 
         const res = await fetch(`${ZAI_API_BASE}/chat/completions`, {
@@ -107,9 +105,8 @@ export class ZAI {
 
       /**
        * Streaming chat completion — returns an object whose
-       * `toReadableStream()` yields SSE data identical to the
-       * Together SDK so the existing `ChatCompletionStream.fromReadableStream`
-       * consumer in `page.client.tsx` keeps working.
+       * `toReadableStream()` yields SSE data compatible with the
+       * `parseSSEStream` consumer in `page.client.tsx`.
        */
       stream(params: CompletionParams): ZAIStream {
         const body: Record<string, unknown> = {

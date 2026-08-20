@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     if (typeof chatId !== "string" || !chatId) {
       await logBraintrustFailure(
         {
-          name: "llamacoder.generate-chat-title",
+          name: "codewix.generate-chat-title",
           type: "llm",
           event: {
             metadata: {
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
     } catch (error) {
       await logBraintrustFailure(
         {
-          name: "llamacoder.generate-chat-title",
+          name: "codewix.generate-chat-title",
           type: "llm",
           event: {
             input: { chatId },
@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
     if (!chat) {
       await logBraintrustFailure(
         {
-          name: "llamacoder.generate-chat-title",
+          name: "codewix.generate-chat-title",
           type: "llm",
           event: {
             input: { chatId },
@@ -149,7 +149,7 @@ export async function POST(request: NextRequest) {
 
     const response = await logger.traced((span) => generateTitle(span), {
       parent: chat.braintrustParent ?? undefined,
-      name: "llamacoder.generate-chat-title",
+      name: "codewix.generate-chat-title",
       type: "llm",
       event: {
         input: {

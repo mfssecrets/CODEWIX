@@ -1,6 +1,6 @@
-// Benchmark Together chat models for the background "short chat title" job.
+// Benchmark Z.AI chat models for the background "short chat title" job.
 //
-// Pulls the live /v1/models catalog so newly-added serverless models are included,
+// Pulls the live /v1/models catalog so newly-added models are included,
 // then probes chat/completions with a deliberately long app prompt. Results are
 // written as JSON + Markdown, sorted by latency among successful title outputs.
 //
@@ -92,7 +92,7 @@ const candidates = catalog
   .slice(0, limit);
 
 console.log(
-  `Benchmarking ${candidates.length}/${catalog.length} live Together catalog models with ${reps} rep(s), concurrency ${concurrency}.`,
+  `Benchmarking ${candidates.length}/${catalog.length} live Z.AI catalog models with ${reps} rep(s), concurrency ${concurrency}.`,
 );
 console.log(`Long prompt chars: ${longPrompt.length}`);
 console.log(`Output: ${outDir}\n`);

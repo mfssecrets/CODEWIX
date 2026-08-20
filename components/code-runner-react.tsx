@@ -97,7 +97,7 @@ type PreviewResource = {
 // still surfacing a genuine hang rather than spinning forever.
 const PREVIEW_WATCHDOG_MS = 60_000;
 const previewTailwindCssCache = new Map<string, string>();
-const PREVIEW_TAILWIND_CSS_CACHE_PREFIX = "llamacoder-preview-tailwind-css:";
+const PREVIEW_TAILWIND_CSS_CACHE_PREFIX = "codewix-preview-tailwind-css:";
 const PREVIEW_TAILWIND_CSS_CACHE_VERSION = "v3";
 const BASEUI_STYLE_FILES = Object.entries(baseuiPreviewFiles).map(
   ([path, content]) => ({ path, content }),

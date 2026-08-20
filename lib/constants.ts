@@ -15,7 +15,6 @@ export const MODEL_ALIASES: Record<string, string> = {
   "Qwen/Qwen3-Coder-Next-FP8": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
   "Qwen/Qwen3-Coder-480B-A35B-Instruct-FP8": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
   "Qwen/Qwen3-235B-A22B-Instruct-2507-tput": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
-  "meta-llama/Llama-3.3-70B-Instruct-Turbo": "zai-org/GLM-5.2",
 };
 
 export function resolveModel(model: string): string {
@@ -77,11 +76,6 @@ export const MODELS: ModelOption[] = [
   {
     label: "Qwen 3 235B (tput)",
     value: "Qwen/Qwen3-235B-A22B-Instruct-2507-tput",
-    hidden: true,
-  },
-  {
-    label: "Llama 3.3 70B",
-    value: "meta-llama/Llama-3.3-70B-Instruct-Turbo",
     hidden: true,
   },
 ];

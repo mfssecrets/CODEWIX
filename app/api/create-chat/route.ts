@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
 
           fullScreenshotDescription = rootSpan
             ? await rootSpan.traced((span) => describeScreenshot(span), {
-                name: "llamacoder.describe-screenshot",
+                name: "codewix.describe-screenshot",
                 type: "llm",
                 event: {
                   input: {
@@ -164,7 +164,7 @@ export async function POST(request: NextRequest) {
 
     traceStarted = true;
     const response = await logger.traced((span) => createChat(span), {
-      name: "llamacoder.create-chat",
+      name: "codewix.create-chat",
       type: "task",
       event: {
         input: {
@@ -186,7 +186,7 @@ export async function POST(request: NextRequest) {
     if (!traceStarted) {
       await logBraintrustFailure(
         {
-          name: "llamacoder.create-chat",
+          name: "codewix.create-chat",
           type: "task",
           event: {
             metadata: {

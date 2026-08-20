@@ -1,5 +1,5 @@
-// Tests the NEW models we want to adopt, to confirm they actually work on
-// Together's SERVERLESS inference API and (for the screenshot→code use case)
+// Tests the Z.AI API models to confirm they work for
+// chat completions and (for the screenshot→code use case)
 // accept image input. Each candidate is paired with the old model it would
 // replace. Run:
 //

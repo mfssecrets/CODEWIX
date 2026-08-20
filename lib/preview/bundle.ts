@@ -44,8 +44,8 @@ export type BundleResult =
     };
 
 declare global {
-  var __llamacoderEsbuildInitPromise: Promise<void> | undefined;
-  var __llamacoderPreviewBundleCache: Map<string, CachedBundle> | undefined;
+  var __codewixEsbuildInitPromise: Promise<void> | undefined;
+  var __codewixPreviewBundleCache: Map<string, CachedBundle> | undefined;
 }
 
 type CachedBundle = {
@@ -62,12 +62,12 @@ const REACT_DEPENDENCY_SPECIFIERS = [
 ];
 
 export function ensureEsbuild(): Promise<void> {
-  globalThis.__llamacoderEsbuildInitPromise ??= esbuild.initialize({
+  globalThis.__codewixEsbuildInitPromise ??= esbuild.initialize({
     wasmURL: ESBUILD_WASM_URL,
     worker: true,
   });
 
-  return globalThis.__llamacoderEsbuildInitPromise;
+  return globalThis.__codewixEsbuildInitPromise;
 }
 
 export async function bundle(
@@ -169,8 +169,8 @@ function getInputStats(files: Record<string, string>, cacheKey: string) {
 }
 
 function getBundleCache() {
-  globalThis.__llamacoderPreviewBundleCache ??= new Map();
-  return globalThis.__llamacoderPreviewBundleCache;
+  globalThis.__codewixPreviewBundleCache ??= new Map();
+  return globalThis.__codewixPreviewBundleCache;
 }
 
 function getCachedBundle(key: string) {

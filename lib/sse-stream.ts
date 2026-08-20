@@ -1,6 +1,5 @@
 /**
  * Lightweight SSE chat-completion stream parser.
- * Drop-in replacement for the Together AI SDK's `ChatCompletionStream.fromReadableStream()`.
  *
  * Usage:
  *   import { parseSSEStream } from "@/lib/sse-stream";

@@ -219,9 +219,9 @@ quota is ~5MB, so after a couple dozen entries `setItem` throws, the catch
 swallows it, and the persistent cache stops working forever — every session is
 a cold in-iframe Tailwind compile again ("it feels like nothing is cached").
 
-**Fix:** evict old `llamacoder-preview-tailwind-css:` keys (prefix scan + LRU
+**Fix:** evict old `codewix-preview-tailwind-css:` keys (prefix scan + LRU
 by timestamp, cap ~10 entries), or better: move this cache into the existing
-IndexedDB `llamacoder-preview` DB (bundles store already there, much larger
+IndexedDB `codewix-preview` DB (bundles store already there, much larger
 quota).
 
 ## 4. Streaming re-bundles on every chunk

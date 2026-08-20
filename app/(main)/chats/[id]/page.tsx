@@ -55,7 +55,7 @@ const getChatById = cache(async (id: string) => {
       quality: true,
       prompt: true,
       title: true,
-      llamaCoderVersion: true,
+      appVersion: true,
       shadcn: true,
       createdAt: true,
     },

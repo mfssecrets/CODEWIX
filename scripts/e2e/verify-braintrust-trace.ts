@@ -2,7 +2,7 @@ import { execFileSync } from "node:child_process";
 import { randomUUID } from "node:crypto";
 
 const baseUrl = process.env.BASE_URL ?? "http://localhost:3000";
-const project = process.env.BRAINTRUST_PROJECT ?? "llamacoder";
+const project = process.env.BRAINTRUST_PROJECT ?? "codewix";
 const model = process.env.E2E_MODEL ?? "zai-org/GLM-5.2";
 const marker = `BT-E2E-${randomUUID()}`;
 const prompt = `Build a tiny trace verification app with a counter and reset button. Verification marker ${marker}.`;
@@ -69,9 +69,9 @@ function queryRows(chatId: string): LogRow[] {
 
 function assertTrace(rows: LogRow[], chatId: string) {
   const expectedNames = [
-    "llamacoder.create-chat",
-    "llamacoder.generate-chat-title",
-    "llamacoder.stream-generation",
+    "codewix.create-chat",
+    "codewix.generate-chat-title",
+    "codewix.stream-generation",
   ];
   const names = rows
     .map((row) => row.span_attributes.name)
@@ -80,13 +80,13 @@ function assertTrace(rows: LogRow[], chatId: string) {
   const rootIds = new Set(rows.map((row) => row.root_span_id));
   const roots = rows.filter((row) => row.is_root);
   const create = rows.find(
-    (row) => row.span_attributes.name === "llamacoder.create-chat",
+    (row) => row.span_attributes.name === "codewix.create-chat",
   );
   const generation = rows.find(
-    (row) => row.span_attributes.name === "llamacoder.stream-generation",
+    (row) => row.span_attributes.name === "codewix.stream-generation",
   );
   const title = rows.find(
-    (row) => row.span_attributes.name === "llamacoder.generate-chat-title",
+    (row) => row.span_attributes.name === "codewix.generate-chat-title",
   );
 
   const failures = [

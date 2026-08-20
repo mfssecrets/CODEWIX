@@ -22,7 +22,7 @@ function Header() {
           <path d="M0.25 0V19.5" stroke="#C2C2C2" strokeWidth="0.5" />
         </svg>
 
-        <span className="mx-auto text-lg font-semibold text-gray-700">
+        <span className="mx-auto text-lg font-semibold text-indigo-100">
           CodeWix
         </span>
       </Link>
@@ -31,11 +31,11 @@ function Header() {
         <a
           href="https://github.com/mfssecrets/CODEWIX"
           target="_blank"
-          className="ml-auto hidden items-center gap-3 rounded-xl border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-700 sm:flex"
+          className="ml-auto hidden items-center gap-3 rounded-xl border border-indigo-400/30 bg-white/10 px-2 py-2 text-sm font-medium text-indigo-100 backdrop-blur-sm sm:flex"
         >
           <GithubIcon className="h-[18px] w-[18px]" />
           <div className="flex items-center gap-1.5">
-            <span className="font-semibold text-gray-900">7k stars</span>
+            <span className="font-semibold text-white">7k stars</span>
           </div>
         </a>
       </div>

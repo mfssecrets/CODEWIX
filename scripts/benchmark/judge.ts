@@ -29,7 +29,7 @@ export async function judgeScreenshot(options: {
   request?: JudgeRequest;
 }): Promise<JudgeResult> {
   const screenshot = await fs.readFile(options.screenshotPath, "base64");
-  const request = options.request ?? createTogetherJudgeRequest();
+  const request = options.request ?? createJudgeRequest();
   const maxAttempts = options.maxAttempts ?? 3;
   let lastError: unknown;
 
@@ -131,7 +131,7 @@ function parseJsonObject(content: string): any {
   }
 }
 
-function createTogetherJudgeRequest(): JudgeRequest {
+function createJudgeRequest(): JudgeRequest {
   const apiKey = process.env.ZAI_API_KEY;
   const apiBase = process.env.ZAI_API_BASE ?? "https://api.z-ai.cn/v1";
 

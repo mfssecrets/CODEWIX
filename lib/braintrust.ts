@@ -17,7 +17,7 @@ export function getBraintrustLogger() {
   try {
     logger = initLogger({
       apiKey: process.env.BRAINTRUST_API_KEY,
-      projectName: process.env.BRAINTRUST_PROJECT ?? "llamacoder",
+      projectName: process.env.BRAINTRUST_PROJECT ?? "codewix",
       asyncFlush: true,
     });
   } catch (error) {

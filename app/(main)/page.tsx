@@ -5,9 +5,8 @@ import Fieldset from "@/components/fieldset";
 import ArrowRightIcon from "@/components/icons/arrow-right";
 import LoadingButton from "@/components/loading-button";
 import Spinner from "@/components/spinner";
-import bgImg from "@/public/halo.png";
+import AnimatedBackground from "@/components/animated-background";
 import assert from "assert";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -83,33 +82,26 @@ export default function Home() {
 
   return (
     <div className="relative flex grow flex-col">
-      <div className="absolute inset-0 flex justify-center">
-        <Image
-          src={bgImg}
-          alt=""
-          className="max-h-[953px] w-full max-w-[1200px] object-cover object-top mix-blend-screen"
-          priority
-        />
-      </div>
+      <AnimatedBackground />
 
       <div className="isolate flex h-full grow flex-col">
         <Header />
 
         <div className="mt-10 flex grow flex-col items-center px-4 lg:mt-16">
           <a
-            className="mb-4 inline-flex shrink-0 items-center rounded-full border-[0.5px] border-[#BABABA] px-3.5 py-1.5 text-xs text-black transition-shadow"
+            className="mb-4 inline-flex shrink-0 items-center rounded-full border border-indigo-400/30 bg-white/10 px-3.5 py-1.5 text-xs text-indigo-100 backdrop-blur-sm transition-shadow hover:bg-white/15"
             href="https://z-ai.cn"
             target="_blank"
           >
             <span className="text-center">
-              Powered by <span className="font-semibold">Z.AI</span>.
+              Powered by <span className="font-semibold text-white">Z.AI</span>.
             </span>
           </a>
 
-          <h1 className="mt-4 text-balance text-center text-4xl leading-none text-gray-700 md:text-[64px] lg:mt-8">
-            Turn your <span className="text-blue-500">idea</span>
+          <h1 className="mt-4 text-balance text-center text-4xl leading-none text-indigo-100 md:text-[64px] lg:mt-8">
+            Turn your <span className="text-cyan-300">idea</span>
             <br className="hidden md:block" /> into an{" "}
-            <span className="text-blue-500">app</span>
+            <span className="text-cyan-300">app</span>
           </h1>
 
           <form
@@ -161,7 +153,7 @@ export default function Home() {
           >
             <Fieldset>
               <div
-                className={`relative flex w-full max-w-2xl rounded-xl border border-gray-300 bg-white pb-10 transition-[height] ${isPending ? "h-28 overflow-hidden" : ""}`}
+                className={`relative flex w-full max-w-2xl rounded-xl border border-indigo-400/30 bg-white/95 pb-10 shadow-lg shadow-indigo-500/10 backdrop-blur-md transition-[height] ${isPending ? "h-28 overflow-hidden" : ""}`}
               >
                 <div className="w-full">
                   {screenshotLoading && (
@@ -365,7 +357,7 @@ export default function Home() {
                         }
                       }, 0);
                     }}
-                    className="rounded bg-[#E5E9EF] px-2.5 py-1.5 text-xs tracking-[0%] transition-colors hover:bg-[#cccfd5]"
+                    className="rounded border border-indigo-300/30 bg-white/20 px-2.5 py-1.5 text-xs text-indigo-100 tracking-[0%] backdrop-blur-sm transition-colors hover:bg-white/30"
                   >
                     {v.title}
                   </button>
@@ -385,11 +377,11 @@ const Footer = memo(() => {
   return (
     <footer className="flex w-full flex-col items-center justify-between space-y-3 px-5 pb-3 pt-5 text-center sm:flex-row sm:pt-2">
       <div>
-        <div className="font-medium">
+        <div className="font-medium text-indigo-200">
           Built with{" "}
           <a
             href="https://z-ai.cn"
-            className="font-semibold text-blue-600 underline-offset-4 transition hover:text-gray-700 hover:underline"
+            className="font-semibold text-cyan-300 underline-offset-4 transition hover:text-white hover:underline"
           >
             Z.AI
           </a>
@@ -404,7 +396,7 @@ const Footer = memo(() => {
             viewBox="0 0 16 16"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 fill-slate-500 group-hover:fill-slate-700"
+            className="h-5 w-5 fill-indigo-300 group-hover:fill-white"
           >
             <path
               fillRule="evenodd"
@@ -421,7 +413,7 @@ const Footer = memo(() => {
         >
           <svg
             aria-hidden="true"
-            className="h-6 w-6 fill-slate-500 group-hover:fill-slate-700"
+            className="h-6 w-6 fill-indigo-300 group-hover:fill-white"
           >
             <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z" />
           </svg>
@@ -439,7 +431,7 @@ function LoadingMessage({
   screenshotUrl: string | undefined;
 }) {
   return (
-    <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-white px-1 py-3 md:px-3">
+    <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-white/95 px-1 py-3 md:px-3 backdrop-blur-md">
       <div className="flex flex-col items-center justify-center gap-2 text-gray-500">
         <span className="animate-pulse text-balance text-center text-sm md:text-base">
           {isHighQuality

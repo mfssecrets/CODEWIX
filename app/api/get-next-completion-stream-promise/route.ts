@@ -51,7 +51,7 @@ export async function POST(req: Request) {
   if (!parsed.success) {
     await logBraintrustFailure(
       {
-        name: "llamacoder.stream-generation",
+        name: "codewix.stream-generation",
         type: "llm",
         event: {
           metadata: {
@@ -81,7 +81,7 @@ export async function POST(req: Request) {
   } catch (error) {
     await logBraintrustFailure(
       {
-        name: "llamacoder.stream-generation",
+        name: "codewix.stream-generation",
         type: "llm",
         event: {
           input: { messageId },
@@ -99,7 +99,7 @@ export async function POST(req: Request) {
   if (!message) {
     await logBraintrustFailure(
       {
-        name: "llamacoder.stream-generation",
+        name: "codewix.stream-generation",
         type: "llm",
         event: {
           input: { messageId },
@@ -133,7 +133,7 @@ export async function POST(req: Request) {
     await logBraintrustFailure(
       {
         parent: message.chat.braintrustParent ?? undefined,
-        name: "llamacoder.stream-generation",
+        name: "codewix.stream-generation",
         type: "llm",
         event: {
           input: { messageId },
@@ -177,7 +177,7 @@ export async function POST(req: Request) {
 
   const span = startBraintrustSpan({
     parent: message.chat.braintrustParent ?? undefined,
-    name: "llamacoder.stream-generation",
+    name: "codewix.stream-generation",
     type: "llm",
     event: {
       input: {
