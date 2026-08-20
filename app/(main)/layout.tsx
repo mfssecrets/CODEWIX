@@ -1,5 +1,6 @@
 import Providers from "@/app/(main)/providers";
 import { Toaster } from "@/components/ui/toaster";
+import { AuthProvider } from "@/components/auth-provider";
 
 export default function Layout({
   children,
@@ -8,11 +9,12 @@ export default function Layout({
 }>) {
   return (
     <Providers>
-      <body className="flex min-h-full flex-col bg-gray-100 text-gray-900 antialiased">
-        {children}
-
-        <Toaster />
-      </body>
+      <AuthProvider>
+        <body className="flex min-h-full flex-col bg-gray-100 text-gray-900 antialiased">
+          {children}
+          <Toaster />
+        </body>
+      </AuthProvider>
     </Providers>
   );
 }
